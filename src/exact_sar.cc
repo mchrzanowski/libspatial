@@ -22,10 +22,11 @@ ExactSAR::solve(){
 double
 ExactSAR::log_likelihood(double rho_hat){
   const mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho_hat * W;
-  const colvec log_Ay = log(A * y);
+  const colvec IXAy = IX * A * y;
   // log_det(A) = \sum_{i=1}^n \log(1 - \rho\lambda_i)
   const double log_det = sum(log(1 - rho_hat * eigs));
-  return (-2. / m) * log_det + dot(log_Ay, log_Ay);
+  
+  return (-2. / m) * log_det + log(dot(IXAy, IXAy));
 }
 
 /* the loglikelihood is convex wrt \rho, so it's also quasiconvex.
