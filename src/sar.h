@@ -4,7 +4,7 @@
 class SAR {
 
 public:
-  SAR(const arma::colvec &y);
+  SAR(const arma::colvec &y, arma::uword m, arma::uword n);
   virtual ~SAR();
   virtual void solve() = 0;
 
@@ -13,7 +13,8 @@ public:
   double get_sigma_sq();
 
 protected:
-  arma::colvec beta;
   const arma::colvec &y;
+  const arma::uword m, n;
+  arma::colvec beta;
   double rho, sigma_sq;
 };

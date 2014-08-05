@@ -1,6 +1,7 @@
 #include "sar.h"
 
-SAR::SAR(const arma::colvec &y) : y(y) {}
+SAR::SAR(const arma::colvec &y, arma::uword m, arma::uword n) : y(y), m(m),
+  n(n) {}
 
 SAR::~SAR() {}
 
