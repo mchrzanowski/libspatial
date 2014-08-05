@@ -29,10 +29,7 @@ ExactSAR::log_likelihood(double rho_hat){
   return (-2. / m) * log_det + log(dot(IXAy, IXAy));
 }
 
-/* the loglikelihood is convex wrt \rho, so it's also quasiconvex.
-  note the derivative is more costly to calculate than the function itself, and
-  so we resort to quasiconvex optimization (gss) to solve for \rho efficiently
-  algo from: http://en.wikipedia.org/wiki/Golden_section_search */
+/* from: http://en.wikipedia.org/wiki/Golden_section_search */
 double
 ExactSAR::golden_section_search(double a, double b, double c, double tol) {
   static const double phi = (1 + sqrt(5)) / 2;
