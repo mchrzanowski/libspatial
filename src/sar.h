@@ -13,6 +13,11 @@ public:
   double get_sigma_sq();
 
 protected:
+  virtual double log_likelihood(double rho_hat) = 0;
+  double golden_section_search(double a, double b, double c,
+                                double tol=sqrt(arma::datum::eps));
+  double bisection(double l, double u, double tol=sqrt(arma::datum::eps));
+
   const arma::colvec &y;
   const arma::uword m, n;
   arma::colvec beta;
