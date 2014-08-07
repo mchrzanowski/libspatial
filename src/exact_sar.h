@@ -6,10 +6,10 @@ public:
   void solve();
 
 protected:
-  double log_likelihood(double rho_hat);
+  double rho_ll(double rho_hat);
+  double log_likelihood();
 
-private:
   const arma::mat &W;
   const arma::mat &X, IX;
-  arma::colvec eigs;
+  const arma::colvec eigs;
 };

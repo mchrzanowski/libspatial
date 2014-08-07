@@ -2,14 +2,21 @@
 #include <assert.h>
 #include <cmath>
 
-SAR::SAR(const arma::colvec &y, arma::uword m, arma::uword n) : y(y), m(m),
-  n(n) {}
+SAR::SAR(const arma::colvec &_y, arma::uword m, arma::uword n) : y(_y), m(m),
+  n(n), mu(arma::mean(_y)) {
+    y -= mu;
+}
 
 SAR::~SAR() {}
 
 const arma::colvec &
 SAR::get_beta(){
   return beta;
+}
+
+double
+SAR::get_mu(){
+  return mu;
 }
 
 double
@@ -27,18 +34,18 @@ double
 SAR::bisection(double l, double u, double tol) {
   assert(l < u);
   assert(tol > 0);
-  
+
   double t, ll;
   do {
     t = (l + u) / 2;
-    ll = log_likelihood(t);
-    if (isnan(ll) || isinf(ll)){
+    ll = rho_ll(t);
+    if (! isnan(ll) && ! isinf(ll)){
       u = t;
     }
     else {
       l = t;
     }
-  } while (u - l > tol);
+  } while ((u - l) > tol);
   return t;
 }
 
@@ -58,8 +65,8 @@ SAR::golden_section_search(double a, double b, double c, double tol) {
     return (c + a) / 2; 
   }
 
-  double ll_x = log_likelihood(x);
-  double ll_b = log_likelihood(b);
+  double ll_x = rho_ll(x);
+  double ll_b = rho_ll(b);
   assert(ll_x != ll_b);
   if (ll_x < ll_b) {
     if (c - b > b - a) {
@@ -77,4 +84,29 @@ SAR::golden_section_search(double a, double b, double c, double tol) {
       return golden_section_search(x, b, c, tol);
     }
   }
+}
+
+void
+SAR::get_bound(double &x, const double multiplier){
+  double ll = rho_ll(x); 
+  while (isinf(ll) || isnan(ll)) {
+    if (x == 0){
+      x = .01;
+    }
+    else {
+      x *= multiplier;
+    }
+    ll = rho_ll(x);
+  }
+}
+
+void
+SAR::calculate_rho(){
+  double lower = 0, upper = 1 - arma::datum::eps;
+  get_bound(lower, 1.05);
+  get_bound(upper, 0.95);
+
+  double theta = 2 / (3 + sqrt(5));
+  double avg = (1 - theta) * lower + theta * upper;
+  rho = golden_section_search(lower, avg, upper);
 }
