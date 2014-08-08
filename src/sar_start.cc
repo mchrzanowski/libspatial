@@ -33,10 +33,8 @@ main(int argc, char **argv){
   }
   y /= 255;
 
-  //std::cout << mean(y) << std::endl;
   sp_mat W;
-  create_4_neighbor_W(m, img.width(), W);
-  
+  create_4_neighbor_W(m, img.width(), W);  
   mat X = ones<mat>(m, n);
 
   wall_clock timer;
@@ -45,10 +43,11 @@ main(int argc, char **argv){
   SAR *sar = new ExactSAR(W, X, y);
   run_test(sar, std::string("Exact SAR: "));
   std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
-  std::cout << "Log-Likelihood: " << sar->log_likelihood() << std::endl
-    << std::endl;
+  std::cout << "Log-Likelihood: " << sar->log_likelihood() << std::endl;
   delete sar;
 
+  std::cout << endl;
+  
   timer.tic();
   sar = new ChebyshevSAR(W, X, y);
   run_test(sar, std::string("Chebyshev SAR: "));
