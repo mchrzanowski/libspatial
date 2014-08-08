@@ -2,7 +2,7 @@
 
 using namespace arma;
 
-/* creates a symmetric, sparse, row-stochastic neighborhood matrix.
+/* creates a symmetric, sparse, neighborhood matrix.
   this matrix has the nice property that the absolute value of all its
   eigenvalues are less than or equal to 1. */
 void
@@ -11,26 +11,26 @@ create_4_neighbor_W(uword points, uword img_width, sp_mat &W){
   colvec d = zeros<colvec>(points);
   for (uword i = 0; i < img_width; i++){
     for (uword j = 0; j < img_width; j++){
-      uword sourceIndx = j * img_width + i, destIndx;
+      uword source = j * img_width + i, dest;
       if (j + 1 < img_width){
-        destIndx = (j + 1) * img_width + i;
-        W(sourceIndx, destIndx) = 1;
-        d[sourceIndx]++;
+        dest = (j + 1) * img_width + i;
+        W(source, dest) = 1;
+        d[source]++;
       } 
       if (i + 1 < img_width) {
-        destIndx = j * img_width + i + 1;
-        W(sourceIndx, destIndx) = 1;
-        d[sourceIndx]++;
+        dest = j * img_width + i + 1;
+        W(source, dest) = 1;
+        d[source]++;
       }
       if (i > 0) {
-        destIndx = j * img_width + i - 1;
-        W(sourceIndx, destIndx) = 1;
-        d[sourceIndx]++;
+        dest = j * img_width + i - 1;
+        W(source, dest) = 1;
+        d[source]++;
       }
       if (j > 0){
-        destIndx = (j - 1) * img_width + i;
-        W(sourceIndx, destIndx) = 1;
-        d[sourceIndx]++;
+        dest = (j - 1) * img_width + i;
+        W(source, dest) = 1;
+        d[source]++;
       }
     }
   }
