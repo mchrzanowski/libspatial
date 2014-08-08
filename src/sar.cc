@@ -2,21 +2,18 @@
 #include <assert.h>
 #include <cmath>
 
-SAR::SAR(const arma::colvec &_y, arma::uword m, arma::uword n) : y(_y), m(m),
-  n(n), mu(arma::mean(_y)) {
-    y -= mu;
-}
+using namespace arma;
+
+SAR::SAR(const colvec &y, const mat &X, const sp_mat &W) : 
+  y(y), W(W), X(X),
+  IX(speye<sp_mat>(X.n_rows, X.n_rows) - X * pinv(X.t() * X) * X.t()),
+  m(X.n_rows), n(X.n_cols) {}
 
 SAR::~SAR() {}
 
-const arma::colvec &
+const colvec &
 SAR::get_beta(){
   return beta;
-}
-
-double
-SAR::get_mu(){
-  return mu;
 }
 
 double
@@ -86,6 +83,18 @@ SAR::golden_section_search(double a, double b, double c, double tol) {
   }
 }
 
+void 
+SAR::solve(){
+  calculate_rho();
+  const sp_mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho * W;
+  const colvec A_y = A * y;
+  if (! arma::solve(beta, X.t() * X, X.t() * A_y) || ! is_finite(beta)){
+    beta = zeros<colvec>(X.n_cols);  
+  }
+  const colvec IX_A_y = IX * A_y;
+  sigma_sq = dot(IX_A_y, IX_A_y) / m;
+}
+
 void
 SAR::get_bound(double &x, const double multiplier){
   double ll = rho_ll(x); 
@@ -102,7 +111,7 @@ SAR::get_bound(double &x, const double multiplier){
 
 void
 SAR::calculate_rho(){
-  double lower = 0, upper = 1 - arma::datum::eps;
+  double lower = 0, upper = 1 - datum::eps;
   get_bound(lower, 1.05);
   get_bound(upper, 0.95);
 

@@ -2,14 +2,12 @@
 
 class ExactSAR : public SAR {
 public:
-  ExactSAR(const arma::mat &W, const arma::mat &X, const arma::colvec &y);
-  void solve();
+  ExactSAR(const arma::sp_mat &W, const arma::mat &X, const arma::colvec &y);
+  double log_likelihood();
 
 protected:
   double rho_ll(double rho_hat);
-  double log_likelihood();
 
-  const arma::mat &W;
-  const arma::mat &X, IX;
+private:
   const arma::colvec eigs;
 };
