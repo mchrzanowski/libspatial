@@ -20,7 +20,7 @@ LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
 # If you add/change names of header/source files, here is where you
 # edit the Makefile.
 SOURCES = sar.cc exact_sar.cc taylor_sar.cc cheby_sar.cc
-HEADERS = $(SOURCES:.cc=.h)
+HEADERS = $(SOURCES:.cc=.h) create_w.h
 OBJECTS = $(SOURCES:.cc=.o)
 
 SAR = sar_start.out
