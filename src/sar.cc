@@ -112,8 +112,8 @@ SAR::get_bound(double &x, const double multiplier){
 void
 SAR::calculate_rho(){
   double lower = 0, upper = 1 - datum::eps;
-  get_bound(lower, 1.05);
-  get_bound(upper, 0.95);
+  //get_bound(lower, 1.05);
+  //get_bound(upper, 0.95);
 
   double theta = 2 / (3 + sqrt(5));
   double avg = (1 - theta) * lower + theta * upper;
