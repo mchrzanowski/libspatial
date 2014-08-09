@@ -8,10 +8,11 @@ ExactCAR::ExactCAR(const colvec &y, const mat &X, const sp_mat &W) :
 double
 ExactCAR::rho_ll(double rho_hat){
   const sp_mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho_hat * W;
-  const mat IX = speye<sp_mat>(X.n_rows, X.n_rows) - X * pinv(X.t() * A * X) * X.t();
+  const mat IX = speye<sp_mat>(X.n_rows, X.n_rows) - 
+                  X * pinv(X.t() * A * X) * X.t() * A;
   const colvec IX_y = IX * y;
   // log_det(A) = \sum_{i=1}^n \log(1 - \rho\lambda_i)
-  return - sum(log(1 - rho_hat * eigs)) / m + log(dot(IX_y, A * IX_y));
+  return sum(log(1 - rho_hat * eigs)) / 2 - m * log(dot(IX_y, A * IX_y)) / 2;
 }
 
 double

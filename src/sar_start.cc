@@ -59,7 +59,7 @@ main(int argc, char **argv){
   delete sar;
 
   std::cout << std::endl;
-  
+
   CAR *car = new ExactCAR(y, X, W);
   run_test(car, std::string("Exact CAR: "));
   std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;

@@ -68,6 +68,7 @@ ARModel::golden_section_search(double a, double b, double c, double tol) {
   else {
     ll_x = gss_cache[x];
   }
+
   if (gss_cache.find(b) == gss_cache.end()){
     ll_b = rho_ll(b);
     gss_cache[b] = ll_b;
