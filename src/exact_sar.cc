@@ -2,7 +2,7 @@
 
 using namespace arma;
 
-ExactSAR::ExactSAR(const sp_mat &W, const mat &X, const colvec &y) :
+ExactSAR::ExactSAR(const colvec &y, const mat &X, const sp_mat &W) :
   SAR(y, X, W), eigs(eig_sym(mat(W))) {}
 
 double

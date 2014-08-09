@@ -19,13 +19,18 @@ LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
 # In this section, you list the files that are part of the project.
 # If you add/change names of header/source files, here is where you
 # edit the Makefile.
-SOURCES = sar.cc exact_sar.cc taylor_sar.cc cheby_sar.cc
+SOURCES = ar_model.cc sar.cc exact_sar.cc taylor_sar.cc cheby_sar.cc car.cc \
+					exact_car.cc
 HEADERS = $(SOURCES:.cc=.h) create_w.h
 OBJECTS = $(SOURCES:.cc=.o)
 
 SAR = sar_start.out
-all: sar
+all: sar car
+car: $(CAR)
 sar: $(SAR)
+
+car_start.out: $(OBJECTS) sar_start.cc
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 sar_start.out: $(OBJECTS) sar_start.cc
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)

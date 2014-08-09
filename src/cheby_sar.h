@@ -2,8 +2,8 @@
 
 class ChebyshevSAR : public SAR {
 public:
-  ChebyshevSAR(const arma::sp_mat &W, const arma::mat &X,
-                const arma::colvec &y);
+  ChebyshevSAR(const arma::colvec &y, const arma::mat &X,
+                const arma::sp_mat &W);
   double log_likelihood();
 
 protected:

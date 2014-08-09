@@ -6,11 +6,14 @@
 #include "cheby_sar.h"
 #include "CImg.h"
 #include "create_w.h"
+#include "car.h"
+#include "exact_car.h"
+#include "ar_model.h"
 
 using namespace arma;
 
 void
-run_test(SAR *sar, const std::string test_name){
+run_test(ARModel *sar, const std::string test_name){
   sar->solve();
   std::cout << test_name << std::endl;
   std::cout << "Rho: " << sar->get_rho() << std::endl;
@@ -34,26 +37,34 @@ main(int argc, char **argv){
   y /= 255;
 
   sp_mat W;
-  create_4_neighbor_W(m, img.width(), W);  
+  create_4_neighbor_W(m, img.height(), W);  
   mat X = ones<mat>(m, n);
 
   wall_clock timer;
 
   timer.tic();
-  SAR *sar = new ExactSAR(W, X, y);
+  SAR *sar = new ExactSAR(y, X, W);
   run_test(sar, std::string("Exact SAR: "));
   std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
   std::cout << "Log-Likelihood: " << sar->log_likelihood() << std::endl;
   delete sar;
 
-  std::cout << endl;
+  std::cout << std::endl;
   
   timer.tic();
-  sar = new ChebyshevSAR(W, X, y);
+  sar = new ChebyshevSAR(y, X, W);
   run_test(sar, std::string("Chebyshev SAR: "));
   std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
   std::cout << "Log-Likelihood: " << sar->log_likelihood() << std::endl;
   delete sar;
+
+  std::cout << std::endl;
+  
+  CAR *car = new ExactCAR(y, X, W);
+  run_test(car, std::string("Exact CAR: "));
+  std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
+  std::cout << "Log-Likelihood: " << car->log_likelihood() << std::endl;
+  delete car;
 
   return 0;
 }

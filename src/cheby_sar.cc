@@ -2,7 +2,7 @@
 
 using namespace arma;
 
-ChebyshevSAR::ChebyshevSAR(const sp_mat &W, const mat &X, const colvec &y) :
+ChebyshevSAR::ChebyshevSAR(const colvec &y, const mat &X, const sp_mat &W) :
   SAR(y, X, W) {
     cheby_poly_coeffs << 
       1 << 0 << 0 << endr << 
@@ -25,8 +25,7 @@ ChebyshevSAR::rho_ll(double rho_hat){
   }
   colvec tdvec;
   tdvec << m << endr << td1 << endr << td2 - 0.5 * m << endr;
-  rowvec combo_term = cpos * cheby_poly_coeffs;
-  return dot(combo_term, tdvec);
+  return dot(cpos * cheby_poly_coeffs, tdvec);
 }
 
 double
