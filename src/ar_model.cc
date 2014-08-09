@@ -111,7 +111,7 @@ ARModel::get_bound(double &x, const double multiplier){
 
 void
 ARModel::calculate_rho(){
-  const double lower = -1 + datum::eps, upper = 1 - datum::eps;
+  const double lower = 0, upper = 1 - sqrt(datum::eps);
   const double theta = 2 / (3 + sqrt(5));
   const double avg = (1 - theta) * lower + theta * upper;
   rho = golden_section_search(lower, avg, upper);
