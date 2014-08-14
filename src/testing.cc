@@ -13,12 +13,12 @@
 using namespace arma;
 
 void
-run_test(ARModel *sar, const std::string test_name){
-  sar->solve();
+run_test(ARModel *ar, const std::string test_name){
+  ar->solve();
   std::cout << test_name << std::endl;
-  std::cout << "Rho: " << sar->get_rho() << std::endl;
-  std::cout << "Sigma Squared: " << sar->get_sigma_sq() << std::endl;
-  std::cout << "beta: " << sar->get_beta();
+  std::cout << "Rho: " << ar->get_rho() << std::endl;
+  std::cout << "Sigma Squared: " << ar->get_sigma_sq() << std::endl;
+  std::cout << "beta: " << ar->get_beta();
 }
 
 int

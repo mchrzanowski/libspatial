@@ -24,15 +24,11 @@ SOURCES = ar_model.cc sar.cc exact_sar.cc cheby_sar.cc car.cc \
 HEADERS = $(SOURCES:.cc=.h) create_w.h
 OBJECTS = $(SOURCES:.cc=.o)
 
-SAR = sar_start.out
-all: sar car
-car: $(CAR)
-sar: $(SAR)
+TEST = testing.out
+all: test
+test: $(TEST)
 
-car_start.out: $(OBJECTS) sar_start.cc
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-
-sar_start.out: $(OBJECTS) sar_start.cc
+testing.out: $(OBJECTS) testing.cc
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # In make's default rules, a .o automatically depends on its .cc file
@@ -47,7 +43,7 @@ Makefile.dependencies:: $(SOURCES) $(HEADERS)
 # Phony means not a "real" target, it doesn't build anything
 # The phony target "clean" is used to remove all compiled object files.
 # The phony target "spartan" is used to remove all compiled object and backup files.
-.PHONY: clean spartan all sar
+.PHONY: clean spartan all
 
 clean:
 	$(RM) $(CVX) $(CV) $(RP) $(OBJECTS) Makefile.dependencies
