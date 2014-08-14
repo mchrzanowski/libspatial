@@ -25,7 +25,7 @@ SAR::log_likelihood() {
   const colvec A_y = A * y;
   const colvec val = A_y - X * beta;
   static const colvec eigs = eig_sym(mat(W));
-  return calc_log_det(rho) - dot(val, val) / (2 * sigma_sq)
+  return sum(log(1 - rho * eigs)) - dot(val, val) / (2 * sigma_sq)
           - m * log(2 * datum::pi) / 2 - m * log(sigma_sq) / 2;
 }
 
