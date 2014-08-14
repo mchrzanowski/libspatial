@@ -1,14 +1,14 @@
 #include <armadillo>
 #include <iostream>
 #include <string>
-#include "exact_sar.h"
-#include "taylor_sar.h"
-#include "cheby_sar.h"
 #include "CImg.h"
 #include "create_w.h"
+#include "sar.h"
+#include "exact_sar.h"
+#include "cheby_sar.h"
 #include "car.h"
 #include "exact_car.h"
-#include "ar_model.h"
+#include "cheby_car.h"
 
 using namespace arma;
 
@@ -60,8 +60,18 @@ main(int argc, char **argv){
 
   std::cout << std::endl;
 
+  timer.tic();
   CAR *car = new ExactCAR(y, X, W);
   run_test(car, std::string("Exact CAR: "));
+  std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
+  std::cout << "Log-Likelihood: " << car->log_likelihood() << std::endl;
+  delete car;
+
+  std::cout << std::endl;
+
+  timer.tic();
+  car = new ChebyshevCAR(y, X, W);
+  run_test(car, std::string("Chebyshev CAR: "));
   std::cout << "Runtime: " << timer.toc() << " secs. " << std::endl;
   std::cout << "Log-Likelihood: " << car->log_likelihood() << std::endl;
   delete car;

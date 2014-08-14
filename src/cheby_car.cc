@@ -1,9 +1,9 @@
-#include "cheby_sar.h"
+#include "cheby_car.h"
 
 using namespace arma;
 
-ChebyshevSAR::ChebyshevSAR(const colvec &y, const mat &X, const sp_mat &W) :
-  SAR(y, X, W) {
+ChebyshevCAR::ChebyshevCAR(const colvec &y, const mat &X, const sp_mat &W) :
+  CAR(y, X, W) {
     cheby_poly_coeffs << 
       1 << 0 << 0 << endr << 
       0 << 1 << 0 << endr << 
@@ -11,7 +11,7 @@ ChebyshevSAR::ChebyshevSAR(const colvec &y, const mat &X, const sp_mat &W) :
 }
 
 double
-ChebyshevSAR::calc_log_det(double rho_hat){
+ChebyshevCAR::calc_log_det(double rho_hat){
   static const double td1 = 0;
   static const double td2 = accu(W % W);
   static const double npos = 3;

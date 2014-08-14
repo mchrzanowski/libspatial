@@ -20,7 +20,7 @@ LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
 # If you add/change names of header/source files, here is where you
 # edit the Makefile.
 SOURCES = ar_model.cc sar.cc exact_sar.cc taylor_sar.cc cheby_sar.cc car.cc \
-					exact_car.cc
+					exact_car.cc cheby_car.cc
 HEADERS = $(SOURCES:.cc=.h) create_w.h
 OBJECTS = $(SOURCES:.cc=.o)
 

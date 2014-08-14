@@ -1,8 +1,8 @@
-#include "sar.h"
+#include "car.h"
 
-class ChebyshevSAR : public SAR {
+class ChebyshevCAR : public CAR {
 public:
-  ChebyshevSAR(const arma::colvec &y, const arma::mat &X,
+  ChebyshevCAR(const arma::colvec &y, const arma::mat &X,
                 const arma::sp_mat &W);
 
 protected:
