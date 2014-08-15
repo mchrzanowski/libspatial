@@ -13,5 +13,6 @@ protected:
   virtual double calc_log_det(double rho_hat) = 0;
 
 private:
-  const arma::mat XT_W;
+  const arma::mat XT, XT_X, XT_W, XT_W_X;
+  const arma::colvec XT_y;
 };
