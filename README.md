@@ -13,6 +13,7 @@ For more details, see [the preliminary paper about the library](https://www.drop
 ###Dependencies
 * <tt>g++</tt> (at least v. 4.8).
 * <tt>armadillo</tt> (at least v. 4.300).
+* <tt>CImg</tt> (at least v. 1.5.9).
 * a linear algebra subroutine package supported by <tt>armadillo</tt> such as
   <tt>Intel MKL</tt>.
 * Mac OS X (10.9) or Linux.
