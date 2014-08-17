@@ -3,7 +3,6 @@
 #include <string>
 #include "CImg.h"
 #include "ar_factory.h"
-#include "ar_model.h"
 #include "create_w.h"
 
 using namespace arma;
