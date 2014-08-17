@@ -4,13 +4,13 @@
 using namespace arma;
 
 SAR::SAR(const colvec &y, const mat &X, const sp_mat &W) :
-  ARModel(y, X, W) {}
+  ARModel(y, X, W), XT(X.t()) {}
 
 void 
 SAR::solve(){
   calculate_rho();
   const sp_mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho * W;
-  const mat XTAA = X.t() * A * A;
+  const mat XTAA = XT * A * A;
   if (! arma::solve(beta, XTAA * X, XTAA * y)
     || ! is_finite(beta)){
     beta = zeros<colvec>(X.n_cols);
@@ -34,7 +34,7 @@ and not by \beta or \sigma^2 .*/
 double
 SAR::rho_ll(double rho_hat){
   const sp_mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho_hat * W;
-  const mat XTAA = X.t() * A * A.t();
+  const mat XTAA = XT * A * A;
   colvec beta_hat;
   if (! arma::solve(beta_hat, XTAA * X, XTAA * y)
     || ! is_finite(beta)){
