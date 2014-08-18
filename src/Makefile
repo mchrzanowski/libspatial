@@ -46,7 +46,7 @@ Makefile.dependencies:: $(SOURCES) $(HEADERS)
 .PHONY: clean spartan all
 
 clean:
-	$(RM) $(CVX) $(CV) $(RP) $(OBJECTS) Makefile.dependencies
+	$(RM) $(TEST) $(OBJECTS) Makefile.dependencies
 
 spartan: clean
 	$(RM) *~
