@@ -9,8 +9,7 @@ CAR::CAR(const colvec &y, const mat &X, const sp_mat &W) : ARModel(y, X, W),
 void
 CAR::solve(){
   calculate_rho();
-  if (! arma::solve(beta, XT_X - rho * XT_W_X, XT_y - rho * XT_W * y)
-    || ! is_finite(beta)){
+  if (! arma::solve(beta, XT_X - rho * XT_W_X, XT_y - rho * XT_W * y)){
       beta = zeros<colvec>(X.n_cols);
   }
   const colvec y_XB = y - X * beta;
@@ -22,8 +21,7 @@ and not by \beta or \sigma^2 .*/
 double
 CAR::rho_ll(double rho_hat){
   colvec beta_hat;
-  if (! arma::solve(beta_hat, XT_X - rho * XT_W_X, XT_y - rho * XT_W * y)
-    || ! is_finite(beta)){
+  if (! arma::solve(beta_hat, XT_X - rho * XT_W_X, XT_y - rho * XT_W * y)){
       beta_hat = zeros<colvec>(X.n_cols);
   }
   const colvec diff = y - X * beta_hat;
