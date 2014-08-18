@@ -12,6 +12,6 @@ protected:
   double rho_ll(double rho_hat);
   virtual double calc_log_det(double rho_hat) = 0;
 
-private:
   const arma::mat XT;
+  const arma::sp_mat I;
 };

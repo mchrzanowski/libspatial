@@ -13,7 +13,7 @@ ExactSAR::calc_log_det(double rho_hat){
 
 double
 ExactSAR::log_likelihood() {
-  const sp_mat A = speye<sp_mat>(W.n_rows, W.n_cols) - rho * W;
+  const sp_mat A = I - rho * W;
   const colvec val = A * (y - X * beta);
   return sum(log(1 - rho * eigs)) - dot(val, val) / (2 * sigma_sq)
           - m * log(2 * datum::pi) / 2 - m * log(sigma_sq) / 2;
