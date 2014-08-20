@@ -12,18 +12,19 @@ CXXFLAGS = -std=c++11 -march=native -Wall -I$(OpenBLAS_DIR)/include \
 LDFLAGS = -lopenblas -larmadillo -lX11 -lpthread
 
 # Intel MKL flags
-#CXXFLAGS = -std=c++11 -march=native -Wall -O4 -I/usr/include \
+#CXXFLAGS = -std=c++11 -march=native -Wall -I/usr/include \
 #	-I/usr/local/include -L/usr/local/lib -L/opt/intel/lib/intel64 \
 #	-L/opt/intel/mkl/lib/intel64
 
 #LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
 #	-lX11 -lpthread
 
-# add X11 stuff for OS X
-UNAME := $(shell uname)
-ifeq ($(UNAME), Darwin)
+# add X11 stuff for OS X or Linux
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
 	CXXFLAGS += -O3 -I/opt/X11/include -L/opt/X11/lib
-else
+endif
+ifeq ($(OS), Linux)
 	CXXFLAGS += -O4
 endif
 
