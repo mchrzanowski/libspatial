@@ -4,17 +4,17 @@ CXX = g++
 RM = rm -f
 OpenBLAS_DIR = /opt/OpenBLAS
 
-# flags
-#CXXFLAGS = -std=c++11 -march=native -Wall -O4 -I$(OpenBLAS_DIR)/include \
-#						-L$(OpenBLAS_DIR)/lib
-#LDFLAGS = -lopenblas -larmadillo
+# OpenBLAS flags
+CXXFLAGS = -std=c++11 -march=native -Wall -O4 -I$(OpenBLAS_DIR)/include \
+						-L$(OpenBLAS_DIR)/lib -I/opt/X11/include -L/opt/X11/lib
+LDFLAGS = -lopenblas -larmadillo -lX11 -lpthread
 
-CXXFLAGS = -std=c++11 -march=native -Wall -O4 -I/usr/include \
-	-I/usr/local/include -L/usr/local/lib -L/opt/intel/lib/intel64 \
-	-L/opt/intel/mkl/lib/intel64
+#CXXFLAGS = -std=c++11 -march=native -Wall -O4 -I/usr/include \
+#	-I/usr/local/include -L/usr/local/lib -L/opt/intel/lib/intel64 \
+#	-L/opt/intel/mkl/lib/intel64
 
-LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
-	-lX11 -lpthread
+#LDFLAGS = -larmadillo -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 \
+#	-lX11 -lpthread
 
 # In this section, you list the files that are part of the project.
 # If you add/change names of header/source files, here is where you
