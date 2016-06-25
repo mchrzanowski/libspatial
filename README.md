@@ -8,7 +8,7 @@ Currently supported features include:
 * solving SAR and CAR models
 * creating sparse adjacency matrices for images
 
-For more details, see [the preliminary paper about the library](https://www.dropbox.com/s/06rez668ncbzj7k/project.pdf).
+For more details, see [the preliminary paper about the library](https://www.dropbox.com/s/5jt4ditmry53hca/project.pdf).
 
 ###Dependencies
 * <tt>g++</tt> (at least v. 4.8).
